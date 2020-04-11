@@ -15,18 +15,20 @@
             var app = {};
             option = null;
             myChart.showLoading();
-            $.get('./les-miserables.gexf', function (xml) {
+            $.get('./test.gexf', function (xml) {
                 myChart.hideLoading();
 
                 var graph = echarts.dataTool.gexf.parse(xml);
                 var categories = [];
 
                 categories[0] = {name: 'ACE2'};
-                categories[1] = {name: 'Furin'};
+                categories[1] = {name: 'furin'};
                 categories[2] = {name: 'TMPRSS2'};
                 categories[3] = {name: 'cathepsin'};
                 categories[4] = {name: 'mannose-binding-protein'};
+                categories[5] = {name: 'COVID-19'};
 
+                console.log(graph.nodes);
                 graph.nodes.forEach(function (node) {
                     node.itemStyle = null;
                     node.value = node.symbolSize;
@@ -34,7 +36,7 @@
                     node.label = {
                         show: node.symbolSize > 30
                     };
-                    node.category = node.attributes.modularity_class;
+                    node.category = node.attributes[0];
                 });
                 option = {
                     title: {
@@ -52,7 +54,7 @@
                     animationEasingUpdate: 'quinticInOut',
                     series : [
                         {
-                            name: 'Les Miserables',
+                            name: 'COVID19-GENE',
                             type: 'graph',
                             layout: 'force',
                             data: graph.nodes,
