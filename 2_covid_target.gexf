@@ -6,74 +6,58 @@
   <graph defaultedgetype="undirected" mode="static" name="">
     <attributes class="node" mode="static">
       <attribute id="0" title="modularity_class" type="long" />
-    </attributes>
-    <attributes class="edge" mode="static">
-      <attribute id="1" title="label" type="string" />
+      <attribute id="1" title="sid" type="string" />
     </attributes>
     <nodes>
       <node id="0" label="COVID-19">
-        <viz:size value="120.0" />
+        <viz:size value="100.0" />
         <attvalues>
           <attvalue for="0" value="5" />
+          <attvalue for="1" value="MESH:C000657245" />
         </attvalues>
       </node>
-      <node id="1" label="59272">
+      <node id="1" label="angiotensin I converting enzyme 2">
         <viz:size value="40.0" />
         <attvalues>
           <attvalue for="0" value="0" />
+          <attvalue for="1" value="59272" />
         </attvalues>
       </node>
-      <node id="2" label="1508">
+      <node id="2" label="cathepsin B">
         <viz:size value="40.0" />
         <attvalues>
           <attvalue for="0" value="3" />
+          <attvalue for="1" value="1508" />
         </attvalues>
       </node>
-      <node id="3" label="1509">
+      <node id="3" label="cathepsin D">
         <viz:size value="40.0" />
         <attvalues>
           <attvalue for="0" value="3" />
+          <attvalue for="1" value="1509" />
         </attvalues>
       </node>
-      <node id="4" label="1513">
+      <node id="4" label="cathepsin K">
         <viz:size value="40.0" />
         <attvalues>
           <attvalue for="0" value="3" />
+          <attvalue for="1" value="1513" />
         </attvalues>
       </node>
-      <node id="5" label="1514">
+      <node id="5" label="cathepsin L">
         <viz:size value="40.0" />
         <attvalues>
           <attvalue for="0" value="3" />
+          <attvalue for="1" value="1514" />
         </attvalues>
       </node>
     </nodes>
     <edges>
-      <edge id="0" source="0" target="1" weight="2">
-        <attvalues>
-          <attvalue for="1" value="ace2" />
-        </attvalues>
-      </edge>
-      <edge id="1" source="0" target="2" weight="1">
-        <attvalues>
-          <attvalue for="1" value="ace2" />
-        </attvalues>
-      </edge>
-      <edge id="2" source="0" target="3" weight="1">
-        <attvalues>
-          <attvalue for="1" value="ace2" />
-        </attvalues>
-      </edge>
-      <edge id="3" source="0" target="4" weight="1">
-        <attvalues>
-          <attvalue for="1" value="ace2" />
-        </attvalues>
-      </edge>
-      <edge id="4" source="0" target="5" weight="2">
-        <attvalues>
-          <attvalue for="1" value="ace2" />
-        </attvalues>
-      </edge>
+      <edge id="0" source="0" target="1" weight="2" />
+      <edge id="1" source="0" target="2" weight="1" />
+      <edge id="2" source="0" target="3" weight="1" />
+      <edge id="3" source="0" target="4" weight="1" />
+      <edge id="4" source="0" target="5" weight="2" />
     </edges>
   </graph>
 </gexf>

@@ -90,43 +90,76 @@ tmprss2 = {}
 cathepsin = {}
 mannose = {}
 
-total = 0
-
 with open('./KG/genes_diseases_relation.csv', newline='') as csvfile:
     reader = csv.DictReader(csvfile, delimiter='\t')
     for row in reader:
         if disease_id['COVID-19'][0] in row['DiseaseID']:
             if row['GeneID'] in target_gene_id['ACE2']:
                 if row['GeneID'] in ace2:
-                    ace2[row['GeneID']] += 1
+                    ace2[row['GeneID']].append(row['pmids'])
                 else:
-                    ace2[row['GeneID']] = 1
-                total += 1
+                    ace2[row['GeneID']] = [row['pmids']]
 
             if row['GeneID'] in target_gene_id['furin']:
                 if row['GeneID'] in furin:
-                    furin[row['GeneID']] += 1
+                    furin[row['GeneID']].append(row['pmids'])
                 else:
-                    furin[row['GeneID']] = 1
-                total += 1
+                    furin[row['GeneID']] = [row['pmids']]
+
             if row['GeneID'] in target_gene_id['TMPRSS2']:
                 if row['GeneID'] in tmprss2:
-                    tmprss2[row['GeneID']] += 1
+                    tmprss2[row['GeneID']].append(row['pmids'])
                 else:
-                    tmprss2[row['GeneID']] = 1
-                total += 1
+                    tmprss2[row['GeneID']] = [row['pmids']]
+
             if row['GeneID'] in target_gene_id['cathepsin']:
                 if row['GeneID'] in cathepsin:
-                    cathepsin[row['GeneID']] += 1
+                    cathepsin[row['GeneID']].append(row['pmids'])
                 else:
-                    cathepsin[row['GeneID']] = 1
-                total += 1
+                    cathepsin[row['GeneID']] = [row['pmids']]
+
             if row['GeneID'] in target_gene_id['mannose']:
                 if row['GeneID'] in mannose:
-                    mannose[row['GeneID']] += 1
+                    mannose[row['GeneID']].append(row['pmids'])
                 else:
-                    mannose[row['GeneID']] = 1
-                total += 1
+                    mannose[row['GeneID']] = [row['pmids']]
+
+G = nx.Graph()
+
+G.add_node(0, label='COVID-19', modularity_class=5, sid='MESH:C000657245')
+G.nodes[0]['viz'] = {'size': '100.0'}
+
+#https://www.ncbi.nlm.nih.gov/pmc/utils/idconv/v1.0/?tool=my_tool&email=my_email@example.com&ids=32020029
+
+if len(ace2) > 0:
+    for a in ace2:
+        G.add_node(len(G), label=gene_dict[a], modularity_class=0, sid=a)
+        G.nodes[len(G) - 1]['viz'] = {'size': '40.0'}
+        G.add_edge(0, len(G)-1, weight=len(ace2[a]))
+
+if len(furin) > 0:
+    for a in furin:
+        G.add_node(len(G), label=gene_dict[a], modularity_class=1, sid=a)
+        G.nodes[len(G)-1]['viz'] = {'size': '40.0'}
+        G.add_edge(0, len(G)-1, weight=len(furin[a]))
+
+if len(tmprss2) > 0:
+    for a in tmprss2:
+        G.add_node(len(G), label=gene_dict[a], modularity_class=2, sid=a)
+        G.nodes[len(G)-1]['viz'] = {'size': '40.0'}
+        G.add_edge(0, len(G)-1, weight=len(tmprss2[a]))
+
+if len(cathepsin) > 0:
+    for a in cathepsin:
+        G.add_node(len(G), label=gene_dict[a], modularity_class=3, sid=a)
+        G.nodes[len(G)-1]['viz'] = {'size': '40.0'}
+        G.add_edge(0, len(G)-1, weight=len(cathepsin[a]))
+
+if len(mannose) > 0:
+    for a in mannose:
+        G.add_node(len(G), label=gene_dict[a], modularity_class=4, sid=a)
+        G.nodes[len(G)-1]['viz'] = {'size': '40.0'}
+        G.add_edge(0, len(G)-1, weight=len(mannose[a]))
 
 print(ace2)
 print(furin)
@@ -134,19 +167,4 @@ print(tmprss2)
 print(cathepsin)
 print(mannose)
 
-G = nx.Graph()
-
-G.add_node(0, label='ACE2', modularity_class='0')
-G.add_node(1, label='furin', modularity_class='1')
-G.add_node(2, label='TMPRSS2', modularity_class='2')
-G.add_node(3, label='cathepsin', modularity_class='3')
-G.add_node(4, label='mannose', modularity_class='4')
-G.add_node(5, label='COVID-19', modularity_class='5')
-
-for a in ace2:
-    ace2[a]
-
-
-
-
-nx.write_gexf(G, "test.gexf")
+nx.write_gexf(G, "2_covid_target.gexf")

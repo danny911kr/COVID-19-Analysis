@@ -15,7 +15,7 @@
             var app = {};
             option = null;
             myChart.showLoading();
-            $.get('./test.gexf', function (xml) {
+            $.get('./2_covid_target.gexf', function (xml) {
                 myChart.hideLoading();
 
                 var graph = echarts.dataTool.gexf.parse(xml);
@@ -28,16 +28,13 @@
                 categories[4] = {name: 'mannose-binding-protein'};
                 categories[5] = {name: 'COVID-19'};
 
-                console.log(graph.nodes);
                 graph.nodes.forEach(function (node) {
                     node.itemStyle = null;
-                    node.value = node.symbolSize;
-                    node.symbolSize /= 1.5;
-                    node.label = {
-                        show: node.symbolSize > 30
-                    };
                     node.category = node.attributes[0];
+                    node.value = node.attributes[1];
                 });
+                graph.nodes[0].label = {show: true};
+
                 option = {
                     title: {
                         text: 'Is there any relation between COVID-19 and ACE2/furin/TMPRSS2/capthesin/mannose binding?',
@@ -57,9 +54,36 @@
                             name: 'COVID19-GENE',
                             type: 'graph',
                             layout: 'force',
+                            animation: false,
+                            layoutAnimation: false,
+
+                            edgeSymbol: ['none', 'arrow'],
+                            edgeSymbolSize: [0, 5],
+                            edgeLabel: {
+                                normal: {
+                                    show: false,
+                                },
+                                emphasis: {
+                                        position: 'right',
+                                        show: true
+                                }
+                            },
+
+                            draggable: true,
                             data: graph.nodes,
                             links: graph.links,
                             categories: categories,
+                            label: {
+                                emphasis: {
+                                    position: 'right',
+                                    show: true
+                                }
+                            },
+                            force: {
+                                edgeLength: 150,
+                                repulsion: 150,
+                                gravity: 0.05
+                            },
                             roam: true,
                             focusNodeAdjacency: true,
                             itemStyle: {
@@ -68,16 +92,7 @@
                                 shadowBlur: 10,
                                 shadowColor: 'rgba(0, 0, 0, 0.3)'
                             },
-                            label: {
-                                normal: {
-                                    position: 'right',
-                                    formatter: '{b}'
-                                },
-                                emphasis: {
-                                    position: 'right',
-                                    show: true
-                                }
-                            },
+
                             lineStyle: {
                                 color: 'source',
                                 curveness: 0.3
@@ -86,12 +101,6 @@
                                 lineStyle: {
                                     width: 10
                                 }
-                            },
-                            draggable: true,
-                            force: {
-                            edgeLength: 150,
-                            repulsion: 150,
-                            gravity: 0.05
                             }
                         }
                     ]
