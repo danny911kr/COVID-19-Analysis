@@ -14,7 +14,7 @@
        <script type="text/javascript" src="https://www.echartsjs.com/examples/vendors/jquery/jquery.js"></script>
        <script>
         $(function(){
-          $("#tablecontent").load("2_covid_table.html");
+          $("#tablecontent").load("corona_gene_table.html");
         });
        </script>
        <script type="text/javascript">
@@ -23,7 +23,7 @@
             var app = {};
             option = null;
             myChart.showLoading();
-            $.get('./2_covid_target.gexf', function (xml) {
+            $.get('./corona_gene.gexf', function (xml) {
                 myChart.hideLoading();
 
                 var graph = echarts.dataTool.gexf.parse(xml);
@@ -56,7 +56,7 @@
 
                 option = {
                     title: {
-                        text: 'Is there any relation between COVID-19 and ACE2/furin/TMPRSS2/capthesin/mannose binding?',
+                        text: 'Is there any relation between COVID-19/SARS/MERS and ACE2/furin/TMPRSS2/capthesin/mannose binding?',
                         left: 'center'
                     },
                     tooltip: {
